@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>QuantumBot Reply</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+
+<body style="margin: 0; font-family: 'Poppins', sans-serif; background: #ffffff; font-size: 14px;">
+
+<div
+        style="max-width: 680px; margin: 0 auto; padding: 45px 30px 60px; background: #f4f7ff; background-image: url(https://img.freepik.com/free-vector/dark-wavy-colors-background_23-2148403785.jpg); background-repeat: no-repeat; background-size: 800px 452px; background-position: top center; font-size: 14px; color: #434343;">
+    <header>
+        <table style="width: 100%;">
+            <tbody>
+            <tr style="height: 0;">
+                <td>
+                    <img alt="" src="https://quantumbot.in/wp-content/themes/qb/assets/img/qb-light.png"
+                         height="60px" />
+                </td>
+                <td style="text-align: right;">
+                    <span style="font-size: 16px; line-height: 30px; color: #ffffff;">{% now "N j, Y" %}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </header>
+    <main>
+        <div
+                style="margin: 0; margin-top: 70px; padding: 92px 30px 115px; background: #ffffff; border-radius: 30px; text-align: left; color: #434343;">
+
+            <h1 style="text-align: center; color: #000;">Leave is {{ leave_status }}</h1>
+            <p style="font-size: 16px; margin-top: 20px;">The leave status has been updated. Below are the leave details:</p>
+
+            <table style="width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 14px;">
+                <tr>
+                    <td style="font-weight: 600; padding: 8px;">Title:</td>
+                    <td style="padding: 8px;">Replay for your leave is {{ leave_status }} by {{ approved_by }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; padding: 8px;">Leave type:</td>
+                    <td style="padding: 8px;">{{ instance.leave_type.type }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; padding: 8px;">Leave date:</td>
+                    <td style="padding: 8px;">{{ instance.date }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; padding: 8px;">Leave reason:</td>
+                    <td style="padding: 8px;"> {{ instance.description|default:"-" }}</td>
+                </tr>
+            </table>
+
+
+        </div>
+    </main>
+
+    <footer
+            style="width: 100%; max-width: 490px; margin: 20px auto 0; text-align: center; border-top: 1px solid #e6ebf1;">
+        <p style="margin: 0; margin-top: 40px; font-size: 16px; font-weight: 600; color: #434343;">
+            QuantumBot
+        </p>
+        <p style="margin: 0; margin-top: 8px; color: #434343;">
+            1101 to 1106 Sankalp Square 3B, Sindhu Bhavan Road, Beside Taj Skyline, PRL Colony, Thaltej, <br> Ahmedabad-380058, Gujarat, India
+        </p>
+        <div style="margin: 0; margin-top: 16px;">
+            <a href="http://quantumbot.in/" target="_blank" style="display: inline-block;">
+                Website
+            </a>
+        </div>
+        <p style="margin: 0; margin-top: 16px; color: #434343;">
+            Copyright © QuantumBot 2023. All rights reserved.
+        </p>
+    </footer>
+</div>
+</body>
+
+</html>

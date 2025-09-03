@@ -1,0 +1,1 @@
+from .salary_slip import SalarySlip

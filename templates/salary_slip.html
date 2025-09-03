@@ -1,0 +1,203 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Salary Slip</title>
+</head>
+
+<body style="width: 21cm; height: 29.7cm; margin: auto; padding: 1cm; box-sizing: border-box; outline:  black;">
+    <!--21 -->
+    <div style="padding:10px;outline: 2px solid black;">
+        <div style="display: flex; flex-direction: row;justify-content: space-between; ">
+            <div>
+{#                <img src="https://quantumbot.in/assets/img/qb.png"  alt="QuantumBot Logo" width="150" height="150" style="display: inline; text-align: center;>#}
+{#                  <img src="{{ request.build_absolute_uri }}{% static 'images/QBlogo.' %}" alt="QuantumBot Logo" width="150" height="150" style="display: inline; text-align: center;>#}
+{#                 <img src="{% static 'images/QBlogo.png' %}" alt="Description of the image" width="150" height="150"#}
+{#                    style="display: inline; text-align: center;">#}
+                <img src="https://quantumbot.in/wp-content/themes/qb/assets/img/new_qb.png" alt="Description of the image" width="150" height="150"
+                     style="display: inline; text-align: center;">
+            </div>
+
+            <div style="align-items: center;margin-top: 2px;">
+                <p><strong>QuantumBot Private Limited</strong> <br /><br />CIN: U72900GJ2015PTC083927 <br />1101 to 1106
+                    Sankalp Square 3B,<br />Sindhu Bhavan Road, Beside Taj Skyline,<br />PRL Colony, Thaltej,
+                    Ahmedabad,<br /> Gujarat, India-380058.</p>
+
+            </div>
+        </div>
+        <br /><br />
+        <div style="padding:6px; text-align: center;">
+            <h3 style="text-decoration: underline;">Salary Slip of {{ date|date:"F Y" }} </h3>
+        </div>
+    <!--    <div>
+
+            <p>Dear <strong style="font-weight: bold">{{ user.first_name}} {{user.last_name }}</strong>,</p>
+            <p>Please find attached your salary slip for the month of <strong>{{ date|date:"F Y" }}</strong>. If you have any
+                questions or need further clarification, feel free to
+                reach out.</p>
+        </div> -->
+        <div>
+
+
+        </div>
+        <div style="border: 2px solid black; margin-bottom: 10px;">
+            <div style="padding:5px; text-align: center; border-bottom: 2px solid black; text-decoration: underline;">
+                <!-- background-color: lightblue;-->
+                Employee Details
+            </div>
+            <div style="width: 100%; margin: 0; padding: 0; display: flex; flex-direction: row;  ">
+                <div style="width: calc(100% - 20px);  box-sizing: border-box; border-right: 2px solid black;  ">
+                    <table style="width: calc(100% - 20px); margin: 10px; padding: 10px; box-sizing: border-box;">
+                        <tr>
+                            <td style="padding-bottom:5px;"> Employee Name : </td>
+                            <td style="padding-bottom:5px;"> {{ user.first_name}} {{user.last_name }} </td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:5px;"> Employee Id : </td>
+                            <td style="padding-bottom:5px;"> {{ employee_id }}</td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:5px;"> Designation :</td>
+                            <td style="padding-bottom:5px;"> {{ user.designation.name}}</td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:5px;"> Departhment : </td>
+                            <td style="padding-bottom:5px;"> {{ department }}</td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:5px;">Total Days :</td>
+                            <td style="padding-bottom:5px;"> {{ total_days }} </td>
+
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div style="width: calc(100% - 20px); margin-bottom: 10px;  box-sizing: border-box;  ">
+                    <table style="width: calc(100% - 20px); margin: 10px; padding: 10px; box-sizing: border-box; ">
+                        <tr>
+                            <td style="padding-bottom:5px;"> PF Number : </td>
+                            <td style="padding-bottom:5px;"> {{ provident_fund_number }} </td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:5px;"> ESI Number : </td>
+                            <td style="padding-bottom:5px;"> {{ esic_number }}</td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:5px;"> Bank Name : </td>
+                            <td style="padding-bottom:5px;"> {{ bank_name }} </td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:5px;"> Account/UPI :</td>
+                            <td style="padding-bottom:5px;"> {{ account_number }}</td>
+
+                        </tr>
+                        <tr>
+                            <td style="padding-bottom:5px;">Paid Days :</td>
+                            <td style="padding-bottom:5px;"> {{ paid_days }} </td>
+
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- <div style="display: flex; flex-direction: row; width: calc(100% - 20px); margin: 10px;  box-sizing: border-box;">
+                <div  style="width: calc(100% - 20px); margin: 10px; padding: 10px; box-sizing: border-box; margin: 2px; padding: 16px;  border: 2px solid black; background-color: lightblue; text-align: center;">Erning</div>
+                <div  style="width: calc(100% - 20px); margin: 10px; padding: 10px; box-sizing: border-box; margin: 2px; padding: 16px;  border: 2px solid black; background-color: lightblue; text-align: center;">Deduction</div>
+          </div> -->
+
+        <div style="width: 100%; margin: 0; padding: 0; display: flex; flex-direction: row;">
+            <div
+                style="width: calc(100% - 20px); margin-bottom: 10px;  margin-right: 10px;  box-sizing: border-box; border: 2px solid black;   ">
+                <div
+                    style="width:100%; box-sizing: border-box; padding: 5px;  border-bottom: 2px solid black;  text-align: center; text-decoration: underline;">
+                    Earning</div>
+                <table style="width: calc(100% - 20px); margin-bottom: 10px; padding: 10px; box-sizing: border-box;  ">
+                    <tr>
+                        <td style="padding-bottom:5px;"> Basic Wage : </td>
+                        <td style="padding-bottom:5px;"> {{ basic_salary }} </td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;"> HRA : </td>
+                        <td style="padding-bottom:5px;">{{ hra }}</td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;"> Conveyance Allowances :</td>
+                        <td style="padding-bottom:5px;"> {{ conveyance_allowance }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;"> Medical Allowance :</td>
+                        <td style="padding-bottom:5px;"> {{ medical_allowance }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;">Statutory :</td>
+                        <td style="padding-bottom:5px;"> {{ statutory_bonus }} </td>
+                    </tr>
+{#                    <tr>#}
+{#                        <td style="padding-bottom:5px;">Other Allowance : </td>#}
+{#                        <td style="padding-bottom:5px;"> {{ other_allowance }} </td>#}
+{#                    </tr>#}
+                    <tr>
+                        <td style="padding-bottom:5px;">Marketing Exp. (Reimburse) :</td>
+                        <td style="padding-bottom:5px;"> {{ marketing_expense }} </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;">Net Salary :</td>
+                        <td style="padding-bottom:5px;"> {{ net_salary }} </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;">Total Earning :</td>
+                        <td style="padding-bottom:5px;"> {{ total_earning }} </td>
+                    </tr>
+                </table>
+            </div>
+            <div
+                style="width: calc(100% - 20px); margin-bottom: 10px;  box-sizing: border-box; border: 2px solid black; ">
+                <div
+                    style="width: 100%;  box-sizing: border-box;  padding: 5px;  border-bottom: 2px solid black;  text-align: center; text-decoration: underline;">
+                    Deduction</div>
+                <table style="width: calc(100% - 20px); margin-bottom: 10px; padding: 10px; box-sizing: border-box;  ">
+                    <tr>
+                        <td style="padding-bottom:5px;"> EPF : </td>
+                        <td style="padding-bottom:5px;"> {{ provident_fund }} </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;"> ESI/Health Insurance :</td>
+                        <td style="padding-bottom:5px;"> {{ esic_deduction }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;"> Professional Tax :</td>
+                        <td style="padding-bottom:5px;"> {{ professional_tax }} </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;"> Loan Recovery : </td>
+                        <td style="padding-bottom:5px;"> {{ loan_recovery }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;">Other Deductions :</td>
+                        <td style="padding-bottom:5px;"> {{ other_deduction }} </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom:5px;">Total Deduction :</td>
+                        <td style="padding-bottom:5px;"> {{ total_deduction }} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="padding:5px; text-align: center;   border: 2px solid black;">
+            This Is Computer Generated No Signature Required
+        </div>
+    </div>
+</body>
+</html>

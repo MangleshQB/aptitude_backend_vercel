@@ -1,0 +1,1 @@
+from .courses_view import CoursesView

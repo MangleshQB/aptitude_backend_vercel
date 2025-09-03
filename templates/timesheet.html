@@ -1,0 +1,100 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Employee Time Sheet</title>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>Employee Time Sheet - {{ date }}</h1>#}
+{##}
+{#    <p>Please find attached the detailed time sheet for today's attendance.</p>#}
+{##}
+{#    <h2>Absent Users</h2>#}
+{#    {% if absent_users %}#}
+{#        <table border="1" style="border-collapse: collapse; width: 100%;">#}
+{#            <thead>#}
+{#                <tr>#}
+{#                    <th class="text-center">#</th>#}
+{#                    <th class="text-center">User ID</th>#}
+{#                    <th class="text-center">First Name</th>#}
+{#                    <th class="text-center">Last Name</th>#}
+{#                    <th class="text-center">Email</th>#}
+{#                </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#                {% for user in absent_users %}#}
+{#                    <tr>#}
+{#                        <td class="text-center">{{ forloop.counter }}</td>#}
+{#                        <td class="text-center">{{ user.employee_id }}</td>#}
+{#                        <td class="text-center">{{ user.first_name }}</td>#}
+{#                        <td class="text-center">{{ user.last_name }}</td>#}
+{#                        <td class="text-center">{{ user.email }}</td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            </tbody>#}
+{#        </table>#}
+{#    {% else %}#}
+{#        <p>No absent users today!</p>#}
+{#    {% endif %}#}
+{##}
+{#    <p>Best regards,</p>#}
+{#    <p>Your Team</p>#}
+{#</body>#}
+{#</html>#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Time Sheet</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>Employee Time Sheet - {{ date }}</h1>
+
+<p>Please find attached the detailed time sheet for today's attendance.</p>
+
+<h2>Absent Users</h2>
+{% if absent_users %}
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>User ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in absent_users %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.employee_id }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p style="text-align: center;">No absent users today!</p>
+{% endif %}
+<br>
+<br>
+<p>Best regards,<br>Python Team</p>
+</body>
+</html>
