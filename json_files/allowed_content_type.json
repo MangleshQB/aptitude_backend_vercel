@@ -1,0 +1,166 @@
+{
+  "app_label": "app",
+  "model": "allowedcontenttype",
+  "fk": [
+    {
+      "field": "content_type",
+      "app_label": "contenttypes",
+      "model": "contenttype",
+      "lookup_fields": [
+        "model"
+      ]
+    }
+  ],
+  "data": [
+    {
+      "content_type": {
+        "model": "holiday"
+      }
+    },
+    {
+      "content_type": {
+        "model": "idletimeapproval"
+      }
+    },
+    {
+      "content_type": {
+        "model": "employeetimesheet"
+      }
+    },
+    {
+      "content_type": {
+        "model": "designation"
+      }
+    },
+    {
+      "content_type": {
+        "model": "employeedetails"
+      }
+    },
+    {
+      "content_type": {
+        "model": "designations"
+      }
+    },
+    {
+      "content_type": {
+        "model": "permission"
+      }
+    },
+    {
+      "content_type": {
+        "model": "group"
+      }
+    },
+    {
+      "content_type": {
+        "model": "customuser"
+      }
+    },
+    {
+      "content_type": {
+        "model": "userscreenshots"
+      }
+    },
+    {
+      "content_type": {
+        "model": "usermousetracking"
+      }
+    },
+    {
+      "content_type": {
+        "model": "softwareconfiguration"
+      }
+    },
+    {
+      "content_type": {
+        "model": "courses"
+      }
+    },
+    {
+      "content_type": {
+        "model": "videos"
+      }
+    },
+    {
+      "content_type": {
+        "model": "topic"
+      }
+    },
+    {
+      "content_type": {
+        "model": "presenter"
+      }
+    },
+    {
+      "content_type": {
+        "model": "languages"
+      }
+    },
+    {
+      "content_type": {
+        "model": "category"
+      }
+    },
+    {
+      "content_type": {
+        "model": "testpaper"
+      }
+    },
+    {
+      "content_type": {
+        "model": "persons"
+      }
+    },
+    {
+      "content_type": {
+        "model": "personsanswers"
+      }
+    },
+    {
+      "content_type": {
+        "model": "questions"
+      }
+    },
+    {
+      "content_type": {
+        "model": "configuration"
+      }
+    },
+    {
+      "content_type": {
+        "model": "conference"
+      }
+    },
+    {
+      "content_type": {
+        "model": "choices"
+      }
+    },
+    {
+      "content_type": {
+        "model": "knowledgebase"
+      }
+    },
+    {
+      "content_type": {
+        "model": "salaryslip"
+      }
+    },
+    {
+      "content_type": {
+        "model": "leave"
+      }
+    },
+    {
+      "content_type": {
+        "model": "usersoftwareusage"
+      }
+    },
+    {
+      "content_type": {
+        "model": "ticket"
+      }
+    }
+  ]
+}

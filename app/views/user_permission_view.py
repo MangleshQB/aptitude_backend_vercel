@@ -6,7 +6,9 @@ from app.management.authentication import JWTAuthentication
 from app.models import AllowedContentType
 from app.serializers import CustomUserSerializerForPermission
 from utils.common import ResponseFormat
+from django.db.models import Prefetch
 
+from django.contrib.auth.models import Permission
 
 class UserPermissionView(APIView):
     permission_classes = [IsAuthenticated]
@@ -17,22 +19,57 @@ class UserPermissionView(APIView):
         super().__init__(**kwargs)
 
     def get(self, request):
-
         user = request.user
 
-        allowed_content_type_ids = list(AllowedContentType.objects.values_list('content_type_id', flat=True))
-        permissions = request.user.groups.first().permissions.filter(content_type_id__in=allowed_content_type_ids)
+        allowed_content_type_ids = list(
+            AllowedContentType.objects.values_list('content_type_id', flat=True)
+        )
+
+        group = (
+            user.groups
+            .prefetch_related(
+                Prefetch(
+                    "permissions",
+                    queryset=Permission.objects.filter(
+                        content_type_id__in=allowed_content_type_ids
+                    ).select_related("content_type")
+                )
+            )
+            .first()
+        )
 
         ctx = {}
 
-        for p in permissions:
-            if p.content_type.name not in ctx.keys():
-                ctx[p.content_type.name] = [p.codename.split('_')[0]]
-            else:
-                ctx[p.content_type.name].append(p.codename.split('_')[0])
+        if group:
+            for p in group.permissions.all():
+                key = p.content_type.name
+                action = p.codename.split('_')[0]
 
-        self.response_format['status'] = True
-        self.response_format['data'] = ctx
-        self.response_format['user'] = CustomUserSerializerForPermission(user).data
+                ctx.setdefault(key, []).append(action)
 
-        return Response(self.response_format, status=status.HTTP_200_OK)
+        return Response({
+            "status": True,
+            "data": ctx,
+            "user": CustomUserSerializerForPermission(user).data
+        }, status=status.HTTP_200_OK)
+
+    # def get(self, request):
+    #
+    #     user = request.user
+    #
+    #     allowed_content_type_ids = list(AllowedContentType.objects.values_list('content_type_id', flat=True))
+    #     permissions = request.user.groups.first().permissions.filter(content_type_id__in=allowed_content_type_ids)
+    #
+    #     ctx = {}
+    #
+    #     for p in permissions:
+    #         if p.content_type.name not in ctx.keys():
+    #             ctx[p.content_type.name] = [p.codename.split('_')[0]]
+    #         else:
+    #             ctx[p.content_type.name].append(p.codename.split('_')[0])
+    #
+    #     self.response_format['status'] = True
+    #     self.response_format['data'] = ctx
+    #     self.response_format['user'] = CustomUserSerializerForPermission(user).data
+    #
+    #     return Response(self.response_format, status=status.HTTP_200_OK)

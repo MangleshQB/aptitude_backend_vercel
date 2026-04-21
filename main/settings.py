@@ -9,10 +9,13 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
+
 import environ
-import os
+
+from utils.silk_config import silky_custom_intercept
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -62,11 +65,13 @@ INSTALLED_APPS = [
     'payroll',
     'rest_framework.authtoken',
     'import_export',
-    'django_celery_results'
+    'django_celery_results',
+    "silk",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "silk.middleware.SilkyMiddleware",
     # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -80,7 +85,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'main.urls'
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://192.168.1.106:3000']
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -106,12 +111,13 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 JWT_CONF = {
     "TOKEN_LIFETIME": timedelta(days=10),
-    # "TOKEN_LIFETIME": timedelta(minutes=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
     "FORGOT_PASSWORD_LIFETIME": timedelta(minutes=15),
     "ALGORITHM": "HS256",
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
 }
+
+SILKY_INTERCEPT_FUNC = silky_custom_intercept
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -136,24 +142,24 @@ DATABASES = {
         }
     },
     'crm': {
-        'ENGINE': 'django.db.backends.mysql',
-        'CONN_MAX_AGE': 0,
-        'NAME': 'u635512256_qbcrm',
-        'USER': 'u635512256_qbcrmuser',
-        'PASSWORD': "LzfyPv@9",
-        'HOST': '194.59.164.59',
-        'PORT': 3306,
+        'ENGINE': env.str("CRM_DATABASE_ENGINE", 'django.db.backends.mysql'),
+        'CONN_MAX_AGE': env.int("CRM_DATABASE_CONN_MAX_AGE"),
+        'NAME': env.str("CRM_DATABASE_NAME"),
+        'USER': env.str("CRM_DATABASE_USER"),
+        'PASSWORD': env.str("CRM_DATABASE_PASSWORD"),
+        'HOST': env.str("CRM_DATABASE_HOST"),
+        'PORT': env.int("CRM_DATABASE_PORT"),
         'OPTIONS': {
-            'sql_mode': 'traditional',
+            'sql_mode': env.str("CRM_DATABASE_SQL_MODE")
         }
     },
     'zkteco': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'etp_testing',
-        'USER': 'user',
-        'PASSWORD': 'root',
-        'HOST': '192.168.1.202',
-        'PORT': '3306',
+        'ENGINE': env.str("ZK_TECO_DATABASE_ENGINE", 'django.db.backends.mysql'),
+        'NAME': env.str("ZK_TECO_DATABASE_NAME"),
+        'USER': env.str("ZK_TECO_DATABASE_USER"),
+        'PASSWORD': env.str("ZK_TECO_DATABASE_PASSWORD"),
+        'HOST': env.str("ZK_TECO_DATABASE_HOST"),
+        'PORT': env.int("ZK_TECO_DATABASE_PORT", 3306),
     }
 }
 
@@ -246,12 +252,12 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'server@quantumbot.in'
-EMAIL_HOST_PASSWORD = 'jmoj dgub mwxv dfct'
+EMAIL_BACKEND = env.str("EMAIL_BACKEND")
+EMAIL_HOST = env.str("EMAIL_HOST")
+EMAIL_PORT = env.int("EMAIL_PORT")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 
 SURVEILLANCE_SKYPE_ID = env.str("SURVEILLANCE_SKYPE_ID")
 QUANTUMBOT_SKYPE_ID = env.str("QUANTUMBOT_SKYPE_ID")

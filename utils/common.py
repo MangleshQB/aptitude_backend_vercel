@@ -11,7 +11,6 @@ from app.models import Leaves
 from datetime import timedelta
 from django.db.models import Count
 from configuration.models import Holiday
-
 def validate_file_size(value):
     file_size = value.size
 
@@ -225,3 +224,4 @@ def get_crm_leave(email, start_date, end_date):
 def get_holidays(start_date, end_date):
     all_holidays = Holiday.objects.filter(leave_date__range=[start_date, end_date + timedelta(days=1)])
     print("all_holidays , ", all_holidays)
+
