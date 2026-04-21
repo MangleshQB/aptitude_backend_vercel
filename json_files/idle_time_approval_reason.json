@@ -1,0 +1,18 @@
+{
+  "app_label": "tracking",
+  "model": "idletimeapprovalreason",
+  "data": [
+    {
+      "name": "Help to Others"
+    },
+    {
+      "name": "Meeting"
+    },
+    {
+      "name": "Interview"
+    },
+    {
+      "name": "Other"
+    }
+  ]
+}
