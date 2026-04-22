@@ -3,11 +3,14 @@
 import os
 import sys
 
-
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'main.settings')
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "main.settings")
     try:
+        from django.core.management.commands.runserver import Command
+
+        Command.default_addr = "0.0.0.0"
+        Command.default_port = 8001
         from django.core.management import execute_from_command_line
     except ImportError as exc:
         raise ImportError(
@@ -18,5 +21,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

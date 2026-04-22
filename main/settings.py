@@ -228,7 +228,8 @@ STATICFILES_DIRS = [
 # Directory to collect all static files for production
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-MEDIA_URL = 'media/'
+# MEDIA_URL = 'media/'
+
 MEDIA_ROOT = 'media/'
 
 # Default primary key field type
@@ -274,4 +275,24 @@ SWAGGER_SETTINGS = {
         }
     },
     "USE_SESSION_AUTH": False,
+}
+
+AZURE_ACCOUNT_NAME = env.str("AZURE_ACCOUNT_NAME")
+AZURE_ACCOUNT_KEY = env.str("AZURE_ACCOUNT_KEY")
+AZURE_CONTAINER_MEDIA = env.str("AZURE_CONTAINER_MEDIA")
+AZURE_BLOB_SAS_TOKEN_LIFETIME_MINUTES = env.int("AZURE_BLOB_SAS_TOKEN_LIFETIME_MINUTES", 60)
+MEDIA_URL = f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_CONTAINER_MEDIA}/"
+AZURE_ENV_PREFIX = env.str("AZURE_ENV_PREFIX")
+AZURE_CONNECTION_STRING = os.environ.get("AZURE_CONNECTION_STRING")
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "azure_container": AZURE_CONTAINER_MEDIA,
+            "location": AZURE_ENV_PREFIX,
+            "account_name": AZURE_ACCOUNT_NAME,
+            "account_key": AZURE_ACCOUNT_KEY,
+            "connection_string": AZURE_CONNECTION_STRING,
+        },
+    }
 }
