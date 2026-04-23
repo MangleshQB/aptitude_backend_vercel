@@ -170,3 +170,6 @@ media/*
 */migrations/dev/*
 
 *.zip
+
+uv.lock
+.python-version

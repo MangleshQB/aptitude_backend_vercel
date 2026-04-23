@@ -19,4 +19,4 @@ class UserScreenshots(QBBaseModel):
         return str(self.id)
 
     class Meta:
-        default_permissions = ["add", "change", "delete", "views", 'all', 'team', "owned"]
+        default_permissions = ["add", "change", "delete", "view", 'all', 'team', "owned"]

@@ -1,7 +1,9 @@
 from django.db import models
-from utils.models import QBBaseModel
+
 from app.models import CustomUser
+from utils.models import QBBaseModel
 from .leave_types import LeaveTypes
+
 
 class LeaveBalance(QBBaseModel):
     leave_type = models.ForeignKey(LeaveTypes, on_delete=models.CASCADE)
@@ -13,5 +15,4 @@ class LeaveBalance(QBBaseModel):
         return str(self.user.email)
 
     class Meta:
-        default_permissions = ["add", "change", "delete", "views", 'all', 'team', "owned"]
-
+        default_permissions = ["add", "change", "delete", "view", 'all', 'team', "owned"]

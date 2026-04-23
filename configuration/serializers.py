@@ -1,21 +1,20 @@
-from django.utils import timezone
+from django.db import transaction
 from rest_framework import serializers
-from datetime import timedelta
 
 from app.models import CustomUser
 from configuration.models import SoftwareConfiguration, App_Version, Holiday, LeaveTypes, LeaveBalance, \
     TicketCategory, TicketSubCategory, SoftwareProcess, UserAppVersion
-from hrms.models.knowledge_base import KnowledgeBaseCategory
-from hrms.models.ticket import Ticket
 from utils.common import RelatedFieldAlternative
 from utils.serializer import BaseModelSerializerCore
-from django.db import transaction
 
 
 class ConfigurationSerializer(BaseModelSerializerCore):
+    idle_time_concern_hours_limit = serializers.FloatField(required=False,allow_null=True)
+
     class Meta:
         model = SoftwareConfiguration
         fields = '__all__'
+
 
 class HolidaySerializer(BaseModelSerializerCore):
     class Meta:
@@ -28,11 +27,11 @@ class AppVersionSerializer(BaseModelSerializerCore):
 
     class Meta:
         model = App_Version
-        fields = ['id', 'created_at', 'updated_at', 'is_active', 'is_deleted', 'deleted_at', 'version', 'exe', 'created_by', 'updated_by', 'deleted_by', 'system_os','description']
+        fields = ['id', 'created_at', 'updated_at', 'is_active', 'is_deleted', 'deleted_at', 'version', 'exe',
+                  'created_by', 'updated_by', 'deleted_by', 'system_os', 'description']
 
 
 class LeaveTypesSerializer(BaseModelSerializerCore):
-
     class Meta:
         model = LeaveTypes
         fields = '__all__'
@@ -46,7 +45,7 @@ class LeaveTypesSerializer(BaseModelSerializerCore):
 
         if type is not None:
 
-            if type == LeaveTypes.casual_Leave or type == LeaveTypes.sick_leave :
+            if type == LeaveTypes.casual_Leave or type == LeaveTypes.sick_leave:
                 if not data.get('limit', None):
                     raise serializers.ValidationError('You must specify a limit.')
                 data['limit'] = int(data.get('limit', None))
@@ -123,51 +122,43 @@ class LeaveTypesSerializer(BaseModelSerializerCore):
         return data
 
 
-
-
 class LeaveBalanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = LeaveBalance
         fields = ['id', 'leave_type', 'user', 'balance', 'total']
 
 
-
 class TicketSubCategorySerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True)
     id = serializers.IntegerField(required=False)
-
 
     class Meta:
         model = TicketSubCategory
         fields = ['id', 'name', 'created_by', 'updated_by']
 
 
-
 class CustomuserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = CustomUser
         fields = ['id', 'first_name', 'last_name']
 
 
-
 class TicketCategorySerializer(BaseModelSerializerCore):
-
     ticket_subcategory = TicketSubCategorySerializer(many=True, write_only=True)
     sub_category = serializers.SerializerMethodField()
 
     def get_sub_category(self, instance):
         return TicketSubCategorySerializer(instance.ticket_subcategory_category.all(), many=True).data
 
-    notify_to = RelatedFieldAlternative(queryset=CustomUser.objects.all(), serializer=CustomuserSerializer ,many=True )
+    notify_to = RelatedFieldAlternative(queryset=CustomUser.objects.all(), serializer=CustomuserSerializer, many=True)
 
     class Meta:
         model = TicketCategory
-        fields = ['id', 'name','sub_category','notify_to','ticket_subcategory','created_by','updated_by','is_active']
+        fields = ['id', 'name', 'sub_category', 'notify_to', 'ticket_subcategory', 'created_by', 'updated_by',
+                  'is_active']
 
     @transaction.atomic
     def create(self, validated_data):
-
 
         sub_categorys = validated_data.pop('ticket_subcategory')
         notify_to = validated_data.pop('notify_to')
@@ -179,9 +170,10 @@ class TicketCategorySerializer(BaseModelSerializerCore):
             id = sub_category.get('id', None)
             name = sub_category.get('name', None)
 
-            if id:continue
+            if id: continue
             if name:
-                TicketSubCategory.objects.create(name=name, category=ticket_category, created_by=self.context['created_by'])
+                TicketSubCategory.objects.create(name=name, category=ticket_category,
+                                                 created_by=self.context['created_by'])
 
         return ticket_category
 
